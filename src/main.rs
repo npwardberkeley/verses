@@ -4,15 +4,20 @@ use rand::Rng;
 #[macro_use] extern crate rocket;
 mod verses;
 
+// #[get("/")]
+// fn index() -> (ContentType, String) {
+//     let verse = verses::get_random_verse();
+
+//     let phrase = get_random_phrase(verse.text);
+
+//     let result = phrase + "<br><br>" + &verse.reference.to_string();
+
+//     (ContentType::HTML, result.to_string())
+// }
+
 #[get("/")]
-fn index() -> (ContentType, String) {
-    let verse = verses::get_random_verse();
-
-    let phrase = get_random_phrase(verse.text);
-
-    let result = phrase + "<br><br>" + &verse.reference.to_string();
-
-    (ContentType::HTML, result.to_string())
+fn index() -> &'static str {
+    "Hello, world!"
 }
 
 fn get_random_phrase(input: &'static str) -> String {
