@@ -1,1 +1,1 @@
-web: ROCKET_PORT=8080 ROCKET_ENV=prod ./target/release/verses
+web: ROCKET_PORT=$PORT ROCKET_ENV=prod ./target/release/verses
