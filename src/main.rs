@@ -6,13 +6,27 @@ mod verses;
 
 #[get("/")]
 fn index() -> (ContentType, String) {
-    let verse = verses::get_random_verse();
+    (ContentType::Text, "Hello world!".to_string())
+}
 
+#[get("/html")]
+fn html() -> (ContentType, String) {
+    let verse = verses::get_random_verse();
     let phrase = get_random_phrase(verse.text);
 
     let result = phrase + "<br><br>" + &verse.reference.to_string();
 
     (ContentType::HTML, result.to_string())
+}
+
+#[get("/json")]
+fn json() -> (ContentType, String) {
+    let verse = verses::get_random_verse();
+    let phrase = get_random_phrase(verse.text);
+
+    let result = format!("{{\"phrase\": \"{}\", \"reference\": \"{}\"}}", phrase, verse.reference.to_string());
+
+    (ContentType::JSON, result.to_string())
 }
 
 fn get_random_phrase(input: &'static str) -> String {
@@ -35,4 +49,6 @@ fn get_random_phrase(input: &'static str) -> String {
 #[launch]
 fn rocket() -> _ {
     rocket::build().mount("/", routes![index])
+                   .mount("/", routes![html])
+                   .mount("/", routes![json])
 }
