@@ -1,3 +1,4 @@
+use rocket::config::Config;
 use rocket::http::ContentType;
 use rand::Rng;
 
@@ -48,7 +49,13 @@ fn get_random_phrase(input: &'static str) -> String {
 
 #[launch]
 fn rocket() -> _ {
-    rocket::build().mount("/", routes![index])
-                   .mount("/", routes![html])
-                   .mount("/", routes![json])
+    let config = Config {
+        address: "0.0.0.0".parse().unwrap(),
+        port: 3000,
+        ..Default::default()
+    };
+
+    rocket::custom(config).mount("/", routes![index])
+                          .mount("/", routes![html])
+                          .mount("/", routes![json])
 }
