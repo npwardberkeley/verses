@@ -1,3 +1,5 @@
+use std::net::IpAddr;
+
 use rand::Rng;
 use rocket::config::Config;
 use rocket::http::ContentType;
@@ -54,13 +56,12 @@ fn get_random_phrase(input: &'static str) -> String {
 
 #[launch]
 fn rocket() -> _ {
-    let config = Config {
-        address: "0.0.0.0".parse().unwrap(),
-        port: 3000,
-        ..Default::default()
-    };
-
-    rocket::custom(config)
+    rocket::build()
+        .configure(
+            rocket::Config::figment()
+                .merge(("port", 3000))
+                .merge(("address", "0.0.0.0".parse::<IpAddr>().unwrap())),
+        )
         .mount("/", routes![index])
         .mount("/", routes![html])
         .mount("/", routes![json])
