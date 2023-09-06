@@ -1,8 +1,9 @@
+use rand::Rng;
 use rocket::config::Config;
 use rocket::http::ContentType;
-use rand::Rng;
 
-#[macro_use] extern crate rocket;
+#[macro_use]
+extern crate rocket;
 mod verses;
 
 #[get("/")]
@@ -25,7 +26,11 @@ fn json() -> (ContentType, String) {
     let verse = verses::get_random_verse();
     let phrase = get_random_phrase(verse.text);
 
-    let result = format!("{{\"phrase\": \"{}\", \"reference\": \"{}\"}}", phrase, verse.reference.to_string());
+    let result = format!(
+        "{{\"phrase\": \"{}\", \"reference\": \"{}\"}}",
+        phrase,
+        verse.reference.to_string()
+    );
 
     (ContentType::JSON, result.to_string())
 }
@@ -41,7 +46,7 @@ fn get_random_phrase(input: &'static str) -> String {
     for (i, word) in words.enumerate() {
         if i >= start && i < end {
             phrase.push_str(word);
-            phrase.push_str(" ");
+            phrase.push(' ');
         }
     }
     phrase
@@ -55,7 +60,8 @@ fn rocket() -> _ {
         ..Default::default()
     };
 
-    rocket::custom(config).mount("/", routes![index])
-                          .mount("/", routes![html])
-                          .mount("/", routes![json])
+    rocket::custom(config)
+        .mount("/", routes![index])
+        .mount("/", routes![html])
+        .mount("/", routes![json])
 }

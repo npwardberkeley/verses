@@ -140,7 +140,8 @@ impl Book {
             Book::Titus => "Titus",
             Book::Zechariah => "Zechariah",
             Book::Zephaniah => "Zephaniah",
-        }.to_string()
+        }
+        .to_string()
     }
 }
 
@@ -154,7 +155,12 @@ pub struct Reference {
 
 impl Reference {
     pub fn to_string(&self) -> String {
-        let mut result = format!("{} {}:{}", self.book.to_string(), self.chapter, self.start_verse);
+        let mut result = format!(
+            "{} {}:{}",
+            self.book.to_string(),
+            self.chapter,
+            self.start_verse
+        );
         if self.end_verse > self.start_verse {
             result += &format!("-{}", self.end_verse);
         }
@@ -168,7 +174,7 @@ pub struct Verse {
     pub text: &'static str,
 }
 
-const VERSES: &'static [Verse; 172] = &[
+const VERSES: &[Verse; 172] = &[
         Verse {
             reference: Reference {
                 book: Book::Exodus,
@@ -474,9 +480,9 @@ const VERSES: &'static [Verse; 172] = &[
                 end_verse: 21,
             },
             text: "Do not lay up for yourselves treasures on earth, where moth and rust destroy and where thieves break in and steal, but lay up for yourselves treasures in heaven, where neither moth nor rust destroys and where thieves do not break in and steal.  For where your treasure is, there your heart will be also.",
-        }, 
-        
-        
+        },
+
+
         Verse {
             reference: Reference {
                 book: Book::Matthew,
@@ -717,7 +723,7 @@ const VERSES: &'static [Verse; 172] = &[
                 end_verse: 5,
             },
             text: "I am the vine; you are the branches.  Whoever abides in me and I in him, he it is that bears much fruit, for apart from me you can do nothing.",
-        }, 
+        },
         Verse {
             reference: Reference {
                 book: Book::John,
@@ -830,8 +836,8 @@ const VERSES: &'static [Verse; 172] = &[
                 end_verse: 28,
             },
             text: "And we know that for those who love God all things work together for good, for those who are called according to his purpose.",
-        }, 
-        
+        },
+
         Verse {
             reference: Reference {
                 book: Book::Romans,
@@ -1296,8 +1302,8 @@ const VERSES: &'static [Verse; 172] = &[
                 end_verse: 7,
             },
             text: "For God gave us a spirit of not of fear but of power and love and self-control.",
-        }, 
-        
+        },
+
         Verse {
             reference: Reference {
                 book: Book::Timothy2,
@@ -1522,8 +1528,8 @@ const VERSES: &'static [Verse; 172] = &[
                 end_verse: 4,
             },
             text: "Little children, you are from God and have overcome them, for he who is in you is greater than he who is in the world.",
-        }, 
-        
+        },
+
         Verse {
             reference: Reference {
                 book: Book::John1,
@@ -1556,7 +1562,7 @@ const VERSES: &'static [Verse; 172] = &[
                 end_verse: 20,
             },
             text: "Behold, I stand at the door and knock.  If anyone hears my voice and opens the door, I will come in to him and eat with him, and he with me.",
-        }  
+        }
     ];
 
 pub fn get_random_verse() -> Verse {

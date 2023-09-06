@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     branches:
       - "**"
-      
+
 env:
   SQLX_OFFLINE: true
 
